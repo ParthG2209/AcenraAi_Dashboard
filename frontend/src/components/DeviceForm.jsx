@@ -1,56 +1,111 @@
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 
-const DeviceCard = ({ device, onEdit, onDelete }) => {
-  const navigate = useNavigate();
+const DeviceForm = ({ device, onSubmit, onCancel }) => {
+  const [formData, setFormData] = useState({
+    name: '',
+    location: '',
+    status: 'online',
+    lastSeen: new Date().toISOString().slice(0, 16),
+  });
 
-  const formatDate = (date) => {
-    return new Date(date).toLocaleString();
+  useEffect(() => {
+    if (device) {
+      setFormData({
+        name: device.name || '',
+        location: device.location || '',
+        status: device.status || 'online',
+        lastSeen: device.lastSeen
+          ? new Date(device.lastSeen).toISOString().slice(0, 16)
+          : new Date().toISOString().slice(0, 16),
+      });
+    } else {
+      // Reset form when creating new device
+      setFormData({
+        name: '',
+        location: '',
+        status: 'online',
+        lastSeen: new Date().toISOString().slice(0, 16),
+      });
+    }
+  }, [device]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
-  const getStatusClass = (status) => {
-    return status === 'online' ? 'status-online' : 'status-offline';
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSubmit(formData);
   };
 
   return (
-    <div className="device-card">
-      <div className="device-card-header">
-        <h3>{device.name}</h3>
-        <span className={`status-badge ${getStatusClass(device.status)}`}>
-          {device.status}
-        </span>
+    <form onSubmit={handleSubmit} className="device-form">
+      <div className="form-group">
+        <label htmlFor="name">Device Name *</label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          value={formData.name}
+          onChange={handleChange}
+          required
+          placeholder="Enter device name"
+        />
       </div>
-      
-      <div className="device-card-body">
-        <p>
-          <strong>Location:</strong> {device.location}
-        </p>
-        <p>
-          <strong>Last Seen:</strong> {formatDate(device.lastSeen)}
-        </p>
+
+      <div className="form-group">
+        <label htmlFor="location">Location *</label>
+        <input
+          type="text"
+          id="location"
+          name="location"
+          value={formData.location}
+          onChange={handleChange}
+          required
+          placeholder="Enter location"
+        />
       </div>
-      
-      <div className="device-card-actions">
-        <button
-          onClick={() => navigate(`/devices/${device._id}`)}
-          className="btn btn-info btn-sm"
+
+      <div className="form-group">
+        <label htmlFor="status">Status *</label>
+        <select
+          id="status"
+          name="status"
+          value={formData.status}
+          onChange={handleChange}
+          required
         >
-          View Details
+          <option value="online">Online</option>
+          <option value="offline">Offline</option>
+        </select>
+      </div>
+
+      <div className="form-group">
+        <label htmlFor="lastSeen">Last Seen *</label>
+        <input
+          type="datetime-local"
+          id="lastSeen"
+          name="lastSeen"
+          value={formData.lastSeen}
+          onChange={handleChange}
+          required
+        />
+      </div>
+
+      <div className="form-actions">
+        <button type="submit" className="btn btn-primary">
+          {device ? 'Update Device' : 'Create Device'}
         </button>
-        <button
-          onClick={() => onEdit(device)}
-          className="btn btn-primary btn-sm"
-        >
-          Edit
-        </button>
-        <button
-          onClick={() => onDelete(device._id)}
-          className="btn btn-danger btn-sm"
-        >
-          Delete
+        <button type="button" onClick={onCancel} className="btn btn-secondary">
+          Cancel
         </button>
       </div>
-    </div>
+    </form>
   );
 };
 
-export default DeviceCard;
+export default DeviceForm;
