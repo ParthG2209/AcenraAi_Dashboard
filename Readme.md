@@ -6,7 +6,7 @@ A simple full-stack app I built for managing devices. Has Firebase login, MongoD
 
 Check out the demo video to see the app in action:
 
-![Demo Video](./demo.mp4)
+![Demo ](./demo.gif)
 
 > **Note:** If the video doesn't play inline, you can [download it here](./demo.mp4) or view it directly in the repository.
 
