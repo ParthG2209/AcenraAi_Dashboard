@@ -15,7 +15,7 @@ const SignupPage = () => {
     e.preventDefault();
 
     if (password !== confirmPassword) {
-      return setError('Passwords do not match');
+      return setError('Passwords don\'t match');
     }
 
     try {
@@ -24,7 +24,7 @@ const SignupPage = () => {
       await signup(email, password);
       navigate('/devices');
     } catch (error) {
-      setError('Failed to create account: ' + error.message);
+      setError('Signup failed: ' + error.message);
     } finally {
       setLoading(false);
     }
@@ -44,7 +44,7 @@ const SignupPage = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              placeholder="Enter your email"
+              placeholder="your@email.com"
             />
           </div>
           <div className="form-group">
@@ -55,7 +55,7 @@ const SignupPage = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              placeholder="Enter your password"
+              placeholder="at least 6 characters"
               minLength="6"
             />
           </div>
@@ -67,7 +67,7 @@ const SignupPage = () => {
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
-              placeholder="Confirm your password"
+              placeholder="same password again"
               minLength="6"
             />
           </div>
@@ -80,7 +80,7 @@ const SignupPage = () => {
           </button>
         </form>
         <p className="auth-footer">
-          Already have an account? <Link to="/login">Sign In</Link>
+          Have an account? <Link to="/login">Sign In</Link>
         </p>
       </div>
     </div>

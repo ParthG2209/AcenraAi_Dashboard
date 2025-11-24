@@ -1,27 +1,23 @@
 const mongoose = require('mongoose');
 
-/**
- * Device Schema for MongoDB
- * Represents IoT devices with status tracking
- */
 const deviceSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: [true, 'Device name is required'],
+      required: [true, 'Device needs a name'],
       trim: true,
     },
     location: {
       type: String,
-      required: [true, 'Device location is required'],
+      required: [true, 'Device needs a location'],
       trim: true,
     },
     status: {
       type: String,
-      required: [true, 'Device status is required'],
+      required: [true, 'Device needs a status'],
       enum: {
         values: ['online', 'offline'],
-        message: '{VALUE} is not a valid status. Must be "online" or "offline"',
+        message: 'Status must be online or offline',
       },
     },
     lastSeen: {
@@ -31,11 +27,11 @@ const deviceSchema = new mongoose.Schema(
     },
   },
   {
-    timestamps: true, // Adds createdAt and updatedAt fields automatically
+    timestamps: true, // adds createdAt and updatedAt automatically
   }
 );
 
-// Index for faster queries
+// add indexes for faster queries
 deviceSchema.index({ status: 1 });
 deviceSchema.index({ lastSeen: -1 });
 

@@ -10,7 +10,6 @@ const DeviceListPage = () => {
   const [showForm, setShowForm] = useState(false);
   const [editingDevice, setEditingDevice] = useState(null);
 
-  // Fetch devices on mount
   useEffect(() => {
     fetchDevices();
   }, []);
@@ -22,7 +21,7 @@ const DeviceListPage = () => {
       const response = await apiClient.get('/devices');
       setDevices(response.data.data);
     } catch (err) {
-      setError('Failed to fetch devices: ' + err.message);
+      setError('Could not load devices: ' + err.message);
     } finally {
       setLoading(false);
     }
@@ -32,9 +31,9 @@ const DeviceListPage = () => {
     try {
       await apiClient.post('/devices', formData);
       setShowForm(false);
-      fetchDevices();
+      fetchDevices(); // refresh list
     } catch (err) {
-      setError('Failed to create device: ' + err.message);
+      setError('Could not create device: ' + err.message);
     }
   };
 
@@ -45,12 +44,12 @@ const DeviceListPage = () => {
       setShowForm(false);
       fetchDevices();
     } catch (err) {
-      setError('Failed to update device: ' + err.message);
+      setError('Could not update device: ' + err.message);
     }
   };
 
   const handleDeleteDevice = async (id) => {
-    if (!window.confirm('Are you sure you want to delete this device?')) {
+    if (!window.confirm('Delete this device?')) {
       return;
     }
 
@@ -58,7 +57,7 @@ const DeviceListPage = () => {
       await apiClient.delete(`/devices/${id}`);
       fetchDevices();
     } catch (err) {
-      setError('Failed to delete device: ' + err.message);
+      setError('Could not delete device: ' + err.message);
     }
   };
 
@@ -94,7 +93,7 @@ const DeviceListPage = () => {
 
       {showForm && (
         <div className="form-container">
-          <h3>{editingDevice ? 'Edit Device' : 'Create New Device'}</h3>
+          <h3>{editingDevice ? 'Edit Device' : 'New Device'}</h3>
           <DeviceForm
             device={editingDevice}
             onSubmit={editingDevice ? handleUpdateDevice : handleCreateDevice}

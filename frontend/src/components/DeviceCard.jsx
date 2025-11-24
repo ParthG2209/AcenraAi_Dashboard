@@ -34,7 +34,7 @@ const DeviceCard = ({ device, onEdit, onDelete }) => {
           onClick={() => navigate(`/devices/${device._id}`)}
           className="btn btn-info btn-sm"
         >
-          View Details
+          Details
         </button>
         <button
           onClick={() => onEdit(device)}

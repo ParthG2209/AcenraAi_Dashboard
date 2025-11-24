@@ -4,8 +4,8 @@ const DeviceList = ({ devices, onEdit, onDelete }) => {
   if (devices.length === 0) {
     return (
       <div className="empty-state">
-        <h3>No Devices Found</h3>
-        <p>Click "Add Device" to create your first device.</p>
+        <h3>No Devices</h3>
+        <p>Add a device to get started</p>
       </div>
     );
   }

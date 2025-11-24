@@ -1,33 +1,22 @@
 const axios = require('axios');
 
-/**
- * Tavily Search API Service
- * Handles all external search requests to Tavily API
- * API key is kept server-side only for security
- */
-
 const TAVILY_API_URL = 'https://api.tavily.com/search';
 
-/**
- * Search Tavily API for device information
- * @param {string} query - Search query string
- * @returns {Promise<Object>} Search results
- */
+// call Tavily API to search for stuff
 const searchTavily = async (query) => {
   try {
     const apiKey = process.env.TAVILY_API_KEY;
     
     if (!apiKey) {
-      throw new Error('Tavily API key is not configured');
+      throw new Error('Tavily API key not set in environment');
     }
 
-    // Make request to Tavily Search API
     const response = await axios.post(
       TAVILY_API_URL,
       {
         api_key: apiKey,
         query: query,
-        search_depth: 'basic',
+        search_depth: 'basic', // just quick search
         include_answer: true,
         include_raw_content: false,
         max_results: 5,
@@ -36,43 +25,36 @@ const searchTavily = async (query) => {
         headers: {
           'Content-Type': 'application/json',
         },
-        timeout: 10000, // 10 second timeout
+        timeout: 10000, // 10 seconds
       }
     );
 
     return response.data;
   } catch (error) {
-    console.error('Tavily API Error:', error.message);
+    console.error('Tavily API error:', error.message);
     
     if (error.response) {
-      // API returned an error response
+      // got response but it's an error
       throw new Error(`Tavily API error: ${error.response.data?.error || error.response.statusText}`);
     } else if (error.request) {
-      // Request was made but no response received
-      throw new Error('No response from Tavily API. Please check your connection.');
+      // no response at all
+      throw new Error('No response from Tavily API - check connection');
     } else {
-      // Error in request setup
       throw new Error(error.message);
     }
   }
 };
 
-/**
- * Format Tavily response for frontend consumption
- * @param {Object} tavilyData - Raw Tavily API response
- * @param {string} deviceId - Device ID for reference
- * @param {string} query - Original query
- * @returns {Object} Formatted response
- */
+// clean up the Tavily response for frontend
 const formatTavilyResponse = (tavilyData, deviceId, query) => {
   const results = tavilyData.results || [];
   
   return {
     deviceId,
     query,
-    answer: tavilyData.answer || 'No answer available',
+    answer: tavilyData.answer || 'No answer found',
     topResults: results.map((result) => ({
-      title: result.title || 'Untitled',
+      title: result.title || 'No title',
       url: result.url || '',
       snippet: result.content || result.snippet || 'No content available',
       score: result.score || 0,

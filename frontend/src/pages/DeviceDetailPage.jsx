@@ -24,7 +24,7 @@ const DeviceDetailPage = () => {
       const response = await apiClient.get(`/devices/${id}`);
       setDevice(response.data.data);
     } catch (err) {
-      setError('Failed to fetch device: ' + err.message);
+      setError('Could not load device: ' + err.message);
     } finally {
       setLoading(false);
     }
@@ -38,7 +38,7 @@ const DeviceDetailPage = () => {
       setTavilyData(response.data.data);
     } catch (err) {
       setTavilyError(
-        'Failed to fetch external information: ' +
+        'Could not get external info: ' +
           (err.response?.data?.error || err.message)
       );
     } finally {
@@ -85,7 +85,7 @@ const DeviceDetailPage = () => {
       <div className="page-header">
         <h2>Device Details</h2>
         <button onClick={() => navigate('/devices')} className="btn btn-secondary">
-          Back to Devices
+          Back
         </button>
       </div>
 
@@ -119,13 +119,13 @@ const DeviceDetailPage = () => {
 
         <div className="external-lookup">
           <div className="lookup-header">
-            <h3>External Device Lookup</h3>
+            <h3>External Lookup</h3>
             <button
               onClick={fetchExternalInfo}
               className="btn btn-primary"
               disabled={tavilyLoading}
             >
-              {tavilyLoading ? 'Searching...' : 'Refresh External Info'}
+              {tavilyLoading ? 'Searching...' : 'Search Online'}
             </button>
           </div>
 
@@ -137,8 +137,7 @@ const DeviceDetailPage = () => {
 
           {!tavilyData && !tavilyError && !tavilyLoading && (
             <p className="info-text">
-              Click "Refresh External Info" to search for information about this
-              device using Tavily Search API
+              Click "Search Online" to look up info about this device using Tavily
             </p>
           )}
         </div>

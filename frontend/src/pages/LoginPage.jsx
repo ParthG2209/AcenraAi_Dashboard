@@ -19,7 +19,7 @@ const LoginPage = () => {
       await login(email, password);
       navigate('/devices');
     } catch (error) {
-      setError('Failed to sign in: ' + error.message);
+      setError('Login failed: ' + error.message);
     } finally {
       setLoading(false);
     }
@@ -39,7 +39,7 @@ const LoginPage = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              placeholder="Enter your email"
+              placeholder="your@email.com"
             />
           </div>
           <div className="form-group">
@@ -50,7 +50,7 @@ const LoginPage = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              placeholder="Enter your password"
+              placeholder="password"
             />
           </div>
           <button
@@ -62,7 +62,7 @@ const LoginPage = () => {
           </button>
         </form>
         <p className="auth-footer">
-          Don't have an account? <Link to="/signup">Sign Up</Link>
+          No account? <Link to="/signup">Sign Up</Link>
         </p>
       </div>
     </div>

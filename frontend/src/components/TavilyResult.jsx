@@ -6,9 +6,9 @@ const TavilyResult = ({ data }) => {
   return (
     <div className="tavily-result">
       <div className="tavily-header">
-        <h3>External Lookup Results</h3>
+        <h3>Search Results</h3>
         <p className="tavily-query">
-          <strong>Query:</strong> {data.query}
+          <strong>Searched for:</strong> {data.query}
         </p>
       </div>
 
@@ -21,7 +21,7 @@ const TavilyResult = ({ data }) => {
 
       {data.topResults && data.topResults.length > 0 && (
         <div className="tavily-sources">
-          <h4>Top Sources</h4>
+          <h4>Sources</h4>
           <div className="sources-list">
             {data.topResults.map((result, index) => (
               <div key={index} className="source-item">

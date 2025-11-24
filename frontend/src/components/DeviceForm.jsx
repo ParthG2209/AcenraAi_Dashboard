@@ -10,6 +10,7 @@ const DeviceForm = ({ device, onSubmit, onCancel }) => {
 
   useEffect(() => {
     if (device) {
+      // editing existing device
       setFormData({
         name: device.name || '',
         location: device.location || '',
@@ -19,7 +20,7 @@ const DeviceForm = ({ device, onSubmit, onCancel }) => {
           : new Date().toISOString().slice(0, 16),
       });
     } else {
-      // Reset form when creating new device
+      // new device - reset form
       setFormData({
         name: '',
         location: '',
@@ -53,7 +54,7 @@ const DeviceForm = ({ device, onSubmit, onCancel }) => {
           value={formData.name}
           onChange={handleChange}
           required
-          placeholder="Enter device name"
+          placeholder="e.g. Server #1"
         />
       </div>
 
@@ -66,7 +67,7 @@ const DeviceForm = ({ device, onSubmit, onCancel }) => {
           value={formData.location}
           onChange={handleChange}
           required
-          placeholder="Enter location"
+          placeholder="e.g. Data Center A"
         />
       </div>
 
@@ -98,7 +99,7 @@ const DeviceForm = ({ device, onSubmit, onCancel }) => {
 
       <div className="form-actions">
         <button type="submit" className="btn btn-primary">
-          {device ? 'Update Device' : 'Create Device'}
+          {device ? 'Update' : 'Create'}
         </button>
         <button type="button" onClick={onCancel} className="btn btn-secondary">
           Cancel

@@ -1,7 +1,4 @@
-/**
- * 404 Not Found middleware
- * Handles requests to non-existent routes
- */
+// 404 handler
 const notFound = (req, res, next) => {
   res.status(404).json({
     success: false,

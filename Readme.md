@@ -1,133 +1,110 @@
 # Acenra Mini Dashboard
 
-A full-stack demo application with Firebase Authentication, MongoDB CRUD operations, and Tavily Search API integration.
+A simple full-stack app I built for managing devices. Has Firebase login, MongoDB for storing stuff, and uses Tavily API to search for device info online.
 
-## Features
+## What it does
 
-- 🔐 Firebase Authentication (Email/Password)
-- 📊 Device Management (CRUD operations)
-- 🔍 External device lookup via Tavily Search API
-- 🎨 Clean, responsive UI
-- 🔒 Protected routes for authenticated users
+- Login/signup with Firebase
+- Add, edit, delete devices
+- Look up device info from the web (Tavily API)
+- Basic dashboard UI
 
-## Tech Stack
+## Stack
 
-**Backend:**
-- Node.js + Express
-- MongoDB (local) + Mongoose
-- Tavily Search API integration
-- CORS enabled
+Backend:
+- Node + Express
+- MongoDB (running locally)
+- Tavily for external searches
 
-**Frontend:**
-- React + Vite
-- Firebase Web SDK v9
+Frontend:
+- React with Vite
+- Firebase auth
 - React Router
-- Axios
+- Axios for API calls
 
-## Prerequisites
+## Getting started
 
-- Node.js (v16 or higher)
-- npm
-- MongoDB installed locally
-- MongoDB Compass (for database management)
-- Firebase project with email/password authentication enabled
+You'll need:
+- Node (v16+)
+- MongoDB running locally
+- MongoDB Compass (optional but helpful)
+- Firebase project with email/password enabled
 - Tavily API key
 
-## Setup Instructions
+### MongoDB setup
 
-### 1. MongoDB Setup
+Just make sure MongoDB is running on `mongodb://localhost:27017/`. The app creates the database automatically.
 
-1. Ensure MongoDB is running locally on `mongodb://localhost:27017/`
-2. Open MongoDB Compass and connect to the local instance
-3. The application will automatically create the `acenra_dashboard` database
-
-### 2. Backend Setup
+### Backend
 
 ```bash
 cd backend
 npm install
 ```
 
-Create a `.env` file in the `backend` directory:
+Make a `.env` file in backend folder:
 
 ```env
 PORT=5000
 MONGO_URI_BASE=mongodb://localhost:27017/
 DB_NAME=acenra_dashboard
-TAVILY_API_KEY=tvly_your_key_here
+TAVILY_API_KEY=tvly_your_actual_key_here
 ```
 
-Start the backend server:
+Start it:
 
 ```bash
 npm run dev
 ```
 
-The backend will run on `http://localhost:5000`
+Backend runs on port 5000 (or whatever you set in .env)
 
-### 3. Frontend Setup
+### Frontend
 
 ```bash
 cd frontend
 npm install
 ```
 
-The Firebase configuration is already included in `src/firebase.js`. No additional setup needed.
-
-Start the frontend development server:
+Firebase config is already in the code (it's safe to expose these keys).
 
 ```bash
 npm run dev
 ```
 
-The frontend will run on `http://localhost:5173` (Vite default)
+Frontend runs on `http://localhost:5173`
 
-## Usage
+## Using it
 
-1. **Sign Up**: Create a new account using email and password
-2. **Sign In**: Log in with your credentials
-3. **Manage Devices**: 
-   - View all devices in the dashboard
-   - Add new devices with name, location, and status
-   - Edit existing devices
-   - Delete devices
-4. **External Lookup**: Click on a device to view details and fetch external information via Tavily Search API
+1. Sign up with any email/password
+2. Login
+3. Add devices (name, location, online/offline)
+4. Click on a device to see details
+5. Use "Refresh External Info" to search for device info online
 
-## API Endpoints
+## API stuff
 
-### Devices
-- `GET /devices` - Get all devices
-- `GET /devices/:id` - Get device by ID
-- `POST /devices` - Create new device
-- `PUT /devices/:id` - Update device
-- `DELETE /devices/:id` - Delete device
-- `GET /devices/:id/external` - Fetch external information via Tavily
+### Device endpoints
+- `GET /devices` - get all devices
+- `GET /devices/:id` - get one device
+- `POST /devices` - create device
+- `PUT /devices/:id` - update device
+- `DELETE /devices/:id` - delete device
+- `GET /devices/:id/external` - search Tavily for device info
 
-## Environment Variables
+## Things to fix
 
-### Backend (.env)
-- `PORT` - Server port (default: 5000)
-- `MONGO_URI_BASE` - MongoDB connection base URL
-- `DB_NAME` - Database name
-- `TAVILY_API_KEY` - Your Tavily API key
+- No real auth protection on backend (just Firebase on frontend)
+- Should verify Firebase tokens on backend
+- Need rate limiting
+- Error handling could be better
+- No input validation really
 
-## Development
+## Notes
 
-- Backend uses `nodemon` for hot reload during development
-- Frontend uses Vite's fast HMR (Hot Module Replacement)
-- MongoDB Compass can be used to view and manage the database directly
+Firebase keys in the frontend are fine to expose - that's how Firebase works. The Tavily key stays on the backend which is good.
 
-## Project Structure
+Built this as a quick demo project. Code is rough in places but it works.
 
-See project structure in the generated files.
 
-## Security Notes
 
-- Firebase API keys in frontend are safe to expose (they're public identifiers)
-- Tavily API key is kept server-side only
-- Implement Firebase ID token verification on backend for production
-- Consider adding rate limiting and input sanitization for production use
-
-## License
-
-MIT

@@ -1,27 +1,23 @@
-/**
- * Centralized error handler middleware
- * Catches all errors and returns consistent JSON responses
- */
+// catch-all error handler
 const errorHandler = (err, req, res, next) => {
   console.error('Error:', err.stack);
 
-  // Default error
   let error = { ...err };
   error.message = err.message;
 
-  // Mongoose bad ObjectId
+  // mongo ObjectId error
   if (err.name === 'CastError') {
     const message = 'Resource not found';
     error = { message, statusCode: 404 };
   }
 
-  // Mongoose duplicate key
+  // duplicate key error
   if (err.code === 11000) {
-    const message = 'Duplicate field value entered';
+    const message = 'Duplicate field value';
     error = { message, statusCode: 400 };
   }
 
-  // Mongoose validation error
+  // validation error
   if (err.name === 'ValidationError') {
     const message = Object.values(err.errors).map((val) => val.message);
     error = { message, statusCode: 400 };
@@ -29,7 +25,7 @@ const errorHandler = (err, req, res, next) => {
 
   res.status(error.statusCode || 500).json({
     success: false,
-    error: error.message || 'Server Error',
+    error: error.message || 'Server error',
   });
 };
 

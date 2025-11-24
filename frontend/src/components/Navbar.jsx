@@ -10,7 +10,7 @@ const Navbar = () => {
       await logout();
       navigate('/login');
     } catch (error) {
-      console.error('Failed to logout:', error);
+      console.error('Logout failed:', error);
     }
   };
 
