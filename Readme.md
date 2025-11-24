@@ -92,19 +92,7 @@ Frontend runs on `http://localhost:5173`
 - `DELETE /devices/:id` - delete device
 - `GET /devices/:id/external` - search Tavily for device info
 
-## Things to fix
-
-- No real auth protection on backend (just Firebase on frontend)
-- Should verify Firebase tokens on backend
-- Need rate limiting
-- Error handling could be better
-- No input validation really
 
 ## Notes
 
-Firebase keys in the frontend are fine to expose - that's how Firebase works. The Tavily key stays on the backend which is good.
-
-Built this as a quick demo project. Code is rough in places but it works.
-
-
-
+Firebase keys in the frontend are fine to expose. The Tavily key stays on the backend which is good.
