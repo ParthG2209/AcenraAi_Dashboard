@@ -24,7 +24,6 @@ Frontend:
 - React with Vite
 - Firebase auth
 - React Router
-- Axios for API calls
 
 ## Getting started
 
