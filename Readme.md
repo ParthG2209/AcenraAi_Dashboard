@@ -57,7 +57,7 @@ TAVILY_API_KEY=tvly_your_actual_key_here
 Start it:
 
 ```bash
-npm run dev
+npm start
 ```
 
 Backend runs on port 5000 (or whatever you set in .env)
@@ -69,7 +69,7 @@ cd frontend
 npm install
 ```
 
-Firebase config is already in the code (it's safe to expose these keys).
+Firebase config is already in the code.
 
 ```bash
 npm run dev
@@ -96,6 +96,4 @@ Frontend runs on `http://localhost:5173`
 - `GET /devices/:id/external` - search Tavily for device info
 
 
-## Notes
 
-Firebase keys in the frontend are fine to expose. The Tavily key stays on the backend which is good.
